@@ -18,5 +18,6 @@ serve = "uvicorn:main"
 
 [dependency-groups]
 dev = [
+    "matplotlib>=3.10.8",
     "notebook>=7.5.2",
 ]
