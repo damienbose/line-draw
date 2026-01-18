@@ -2,8 +2,10 @@
 API routes for the line-draw application.
 """
 
-import asyncio
+import logging
 from fastapi import APIRouter, UploadFile, File, HTTPException, BackgroundTasks
+
+logger = logging.getLogger(__name__)
 from fastapi.responses import StreamingResponse
 from PIL import Image
 from io import BytesIO
@@ -24,6 +26,8 @@ router = APIRouter()
 @router.post("/images/upload", response_model=UploadResponse)
 async def upload_image(file: UploadFile = File(...)):
     """Upload an image for processing."""
+    logger.info(f"Received image upload: {file.filename}, content_type={file.content_type}")
+
     # Validate file type
     if not file.content_type or not file.content_type.startswith("image/"):
         raise HTTPException(status_code=400, detail="File must be an image")
@@ -32,6 +36,7 @@ async def upload_image(file: UploadFile = File(...)):
         # Read and validate image
         contents = await file.read()
         image = Image.open(BytesIO(contents))
+        logger.info(f"Image opened: size={image.size}, mode={image.mode}")
 
         # Convert to RGB if necessary
         if image.mode in ('RGBA', 'P'):
@@ -39,19 +44,23 @@ async def upload_image(file: UploadFile = File(...)):
 
         # Create job
         job_id = job_manager.create_job(image)
+        logger.info(f"Job created: {job_id}")
 
         return UploadResponse(job_id=job_id)
 
     except Exception as e:
+        logger.exception("Failed to process uploaded image")
         raise HTTPException(status_code=400, detail=f"Failed to process image: {str(e)}")
 
 
 @router.post("/jobs/{job_id}/start", response_model=StartJobResponse)
 async def start_job(job_id: str, request: StartJobRequest, background_tasks: BackgroundTasks):
     """Start processing a job with given parameters."""
+    logger.info(f"Start job request: job_id={job_id}, params={request.params}")
     job = job_manager.get_job(job_id)
 
     if not job:
+        logger.warning(f"Job not found: {job_id}")
         raise HTTPException(status_code=404, detail="Job not found")
 
     if job.status == JobStatus.PROCESSING:
@@ -61,6 +70,7 @@ async def start_job(job_id: str, request: StartJobRequest, background_tasks: Bac
         raise HTTPException(status_code=400, detail="Job is already completed")
 
     # Start processing in background
+    logger.info(f"Adding run_job to background tasks for job {job_id}")
     background_tasks.add_task(job_manager.run_job, job_id, request.params)
 
     return StartJobResponse(status=JobStatus.PROCESSING)
