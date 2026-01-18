@@ -5,6 +5,7 @@
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { motion } from 'framer-motion';
+import { ImagePlus, Download } from 'lucide-react';
 
 interface ImageUploaderProps {
   onImageSelect: (file: File) => void;
@@ -40,31 +41,35 @@ export function ImageUploader({ onImageSelect, disabled }: ImageUploaderProps) {
       <div
         {...getRootProps()}
         className={`
-          glass rounded-2xl p-12 text-center cursor-pointer
+          surface rounded-2xl p-12 text-center cursor-pointer
           transition-all duration-300
-          ${isDragActive ? 'scale-105 border-white/40' : 'hover:scale-102'}
+          ${isDragActive ? 'border-violet-500/50 bg-violet-500/5' : 'hover:border-zinc-600'}
           ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
         `}
       >
         <input {...getInputProps()} />
 
         <motion.div
-          animate={isDragActive ? { scale: 1.1 } : { scale: 1 }}
+          animate={isDragActive ? { scale: 1.05 } : { scale: 1 }}
           transition={{ type: 'spring', stiffness: 300 }}
         >
-          <div className="text-6xl mb-4">
-            {isDragActive ? '📥' : '🎨'}
+          <div className="flex justify-center mb-4">
+            {isDragActive ? (
+              <Download className="w-12 h-12 text-violet-400" />
+            ) : (
+              <ImagePlus className="w-12 h-12 text-zinc-400" />
+            )}
           </div>
 
-          <h3 className="text-xl font-semibold text-white mb-2">
+          <h3 className="text-xl font-semibold text-zinc-100 mb-2">
             {isDragActive ? 'Drop your image here' : 'Upload an image'}
           </h3>
 
-          <p className="text-white/70">
+          <p className="text-zinc-400">
             Drag and drop an image, or click to select
           </p>
 
-          <p className="text-white/50 text-sm mt-2">
+          <p className="text-zinc-500 text-sm mt-2">
             Supports PNG, JPG, GIF, WebP
           </p>
         </motion.div>

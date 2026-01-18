@@ -105,10 +105,10 @@ function App() {
         animate={{ opacity: 1, y: 0 }}
         className="text-center mb-8"
       >
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
+        <h1 className="text-4xl md:text-5xl font-bold text-zinc-100 mb-2">
           Line Draw
         </h1>
-        <p className="text-white/70">
+        <p className="text-zinc-500">
           Transform your images into beautiful line art
         </p>
       </motion.div>
@@ -120,7 +120,7 @@ function App() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="glass-dark rounded-xl px-6 py-3 mb-6 text-red-300"
+            className="surface-elevated rounded-xl px-6 py-3 mb-6 text-red-400"
           >
             {error}
           </motion.div>
@@ -195,7 +195,7 @@ function App() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="mt-8 text-white/50 text-sm"
+        className="mt-8 text-zinc-600 text-xs"
       >
         Physics-based drawing simulation
       </motion.div>

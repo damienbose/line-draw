@@ -3,6 +3,7 @@
  */
 
 import { motion } from 'framer-motion';
+import { Sparkles, Download, RefreshCw } from 'lucide-react';
 import { getResultDownloadUrl } from '../lib/api';
 
 interface ResultDisplayProps {
@@ -23,17 +24,17 @@ export function ResultDisplay({ jobId, imageBase64, onReset }: ResultDisplayProp
       transition={{ duration: 0.5, type: 'spring' }}
       className="w-full"
     >
-      <div className="glass rounded-2xl p-6">
+      <div className="surface rounded-2xl p-6">
         <div className="text-center mb-6">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-            className="inline-block text-5xl mb-4"
+            className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/10 mb-4"
           >
-            🎉
+            <Sparkles className="w-6 h-6 text-emerald-400" />
           </motion.div>
-          <h3 className="text-2xl font-bold text-white">Your drawing is ready!</h3>
+          <h3 className="text-2xl font-semibold text-zinc-100">Your drawing is ready</h3>
         </div>
 
         {/* Result image */}
@@ -53,31 +54,35 @@ export function ResultDisplay({ jobId, imageBase64, onReset }: ResultDisplayProp
         {/* Action buttons */}
         <div className="grid grid-cols-2 gap-4">
           <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
             onClick={handleDownload}
             className="
+              flex items-center justify-center gap-2
               py-4 rounded-xl font-semibold
-              bg-gradient-to-r from-purple-500 to-pink-500
-              text-white shadow-lg
-              hover:shadow-xl transition-all duration-300
+              bg-violet-500 hover:bg-violet-400
+              text-white
+              transition-colors duration-200
             "
           >
-            Download PNG
+            <Download className="w-5 h-5" />
+            Download
           </motion.button>
 
           <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
             onClick={onReset}
             className="
+              flex items-center justify-center gap-2
               py-4 rounded-xl font-semibold
-              bg-white/10 border border-white/20
-              text-white
-              hover:bg-white/20 transition-all duration-300
+              bg-zinc-800 hover:bg-zinc-700
+              text-zinc-200
+              transition-colors duration-200
             "
           >
-            Create Another
+            <RefreshCw className="w-5 h-5" />
+            New Image
           </motion.button>
         </div>
       </div>
