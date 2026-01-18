@@ -1,1 +1,41 @@
+# Python
 __pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Node
+node_modules/
+*.log
+.npm
+
+# Vite
+frontend/dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Uploads and results
+backend/uploads/
+backend/results/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Generated images
+experiments/*_gray.jpg

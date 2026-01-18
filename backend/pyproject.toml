@@ -1,0 +1,17 @@
+[project]
+name = "linedraw-backend"
+version = "0.1.0"
+description = "Physics-based image-to-drawing API"
+requires-python = ">=3.13"
+dependencies = [
+    "aiofiles>=25.1.0",
+    "fastapi>=0.128.0",
+    "numpy>=2.4.1",
+    "pillow>=12.1.0",
+    "python-multipart>=0.0.21",
+    "uvicorn>=0.40.0",
+    "websockets>=16.0",
+]
+
+[project.scripts]
+serve = "uvicorn:main"
