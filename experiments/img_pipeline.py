@@ -45,19 +45,35 @@ def normalize_array(arr: np.ndarray, eps: float = 1e-8) -> np.ndarray:
     max_val = arr.max()
     return arr / (max_val + eps)
 
-
 def apply_deadzone_mask(img: np.ndarray) -> np.ndarray:
     para_mask = _get_parabaloid_mask(*img.shape)
     para_mask = normalize_array(para_mask)
     return img * para_mask
 
+def get_grads_np(img: np.ndarray):
+    """
+    return the gradient assuming z: f(x, y) -> img where x, y in [0, 1]
+    """
+    H, W = img.shape
+    assert H == W
+    spacing = 1 / H
+    gradient_y, gradient_x = np.gradient(img, spacing)
+    return gradient_x, gradient_y  # keep same convention as your torch version
 
+def run_simulation(gradient_x, gradient_y, start_coords):
+    ...
 
 def process_image(img: Image.Image) -> np.ndarray:
+    # Pre-processing
     img = convert_to_greyscale(img)
     img_surface = convert_to_numpy(img)
     img_surface = center_crop_square(img_surface)
     img_surface = invert_and_flatten_suface(img_surface)
     img_surface = blur_the_image(img_surface)
     img_surface = apply_deadzone_mask(img_surface)
+
+    gradient_x, gradient_y = get_grads_np(img_surface)
+
+
     return img_surface
+
