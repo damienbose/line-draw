@@ -18,8 +18,8 @@ function App() {
   const [params, setParams] = useState<SimulationParams>({
     blur_sigma: 4.0,
     iterations: 1_500_000,
-    start_x: 0.5,
-    start_y: 0.5,
+    start_x: 0.395,
+    start_y: 0.53,
   });
 
   const {
@@ -92,8 +92,8 @@ function App() {
     setParams({
       blur_sigma: 4.0,
       iterations: 1_500_000,
-      start_x: 0.5,
-      start_y: 0.5,
+      start_x: 0.395,
+      start_y: 0.53,
     });
   }, []);
 
